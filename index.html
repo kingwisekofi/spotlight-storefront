@@ -110,145 +110,140 @@
         </div>
     </header>
 
-    <!-- Main Content Container with Side-by-Side Cart Layout -->
+    <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- Main Layout Split: Catalog (Left) & Sticky Cart (Right on Desktop) -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            <!-- Left Side: Store Content -->
-            <div id="main-store-content" class="lg:col-span-8 xl:col-span-9 space-y-10 w-full transition-all duration-300">
-
-                <!-- Enterprise Hero Banner -->
-                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-dark-950 via-dark-800 to-emerald-900/70 border border-emerald-500/20 p-8 sm:p-10 shadow-2xl">
-                    <div class="relative z-10 max-w-xl">
-                        <span class="inline-block text-[11px] uppercase tracking-widest text-amber-400 font-bold bg-dark-950/90 px-3.5 py-1.5 rounded-full border border-amber-500/30 mb-4">
-                            PHARMACY • FRESH JUICE BAR • FROZEN FOODS
-                        </span>
-                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
-                            Trusted Care.<br>
-                            <span class="text-emerald-400">Natural Refreshment.</span>
-                        </h2>
-                        <p class="text-sm sm:text-base text-gray-300 mt-3 leading-relaxed">
-                            Welcome to <strong class="text-white">SpotLight</strong>. Order certified over-the-counter medicines, 100% natural cold-pressed fruit juices, and hygienically packed frozen proteins—delivered straight to your doorstep[cite: 3].
-                        </p>
-                        <div class="flex flex-wrap items-center gap-3 mt-6">
-                            <a href="#store-catalog" onclick="filterCatalog('pharmacy')" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-bold px-4 py-2.5 rounded-xl shadow-lg transition text-sm">
-                                <span>💊</span>
-                                <span>Pharmacy</span>
-                            </a>
-                            <a href="#store-catalog" onclick="filterCatalog('juice')" class="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-dark-950 font-bold px-4 py-2.5 rounded-xl shadow-lg transition text-sm">
-                                <span>🧃</span>
-                                <span>Juices</span>
-                            </a>
-                            <a href="#store-catalog" onclick="filterCatalog('frozen')" class="inline-flex items-center space-x-2 bg-dark-900/90 hover:bg-dark-700 text-white font-semibold px-4 py-2.5 rounded-xl border border-dark-600 transition text-sm">
-                                <span>❄️</span>
-                                <span>Frozen Foods</span>
-                            </a>
-                        </div>
-                    </div>
+        <!-- Enterprise Hero Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-dark-950 via-dark-800 to-emerald-900/70 border border-emerald-500/20 p-8 sm:p-12 lg:p-14 mb-10 shadow-2xl">
+            <div class="relative z-10 max-w-2xl">
+                <span class="inline-block text-[11px] uppercase tracking-widest text-amber-400 font-bold bg-dark-950/90 px-3.5 py-1.5 rounded-full border border-amber-500/30 mb-5">
+                    PHARMACY • FRESH JUICE BAR • FROZEN FOODS
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                    Trusted Care.<br>
+                    <span class="text-emerald-400">Natural Refreshment.</span>
+                </h2>
+                <p class="text-sm sm:text-base text-gray-300 mt-4 leading-relaxed">
+                    Welcome to <strong class="text-white">SpotLight</strong>. Order certified over-the-counter medicines, 100% natural cold-pressed fruit juices, and hygienically packed frozen proteins—delivered straight to your doorstep.
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mt-8">
+                    <a href="#store-catalog" onclick="filterCatalog('pharmacy')" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-bold px-5 py-3 rounded-xl shadow-lg transition">
+                        <span>💊</span>
+                        <span>Shop Pharmacy</span>
+                    </a>
+                    <a href="#store-catalog" onclick="filterCatalog('juice')" class="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-dark-950 font-bold px-5 py-3 rounded-xl shadow-lg transition">
+                        <span>🧃</span>
+                        <span>Fresh Juices</span>
+                    </a>
+                    <a href="#store-catalog" onclick="filterCatalog('frozen')" class="inline-flex items-center space-x-2 bg-dark-900/90 hover:bg-dark-700 text-white font-semibold px-5 py-3 rounded-xl border border-dark-600 transition">
+                        <span>❄️</span>
+                        <span>Frozen Foods</span>
+                    </a>
                 </div>
-
-                <!-- Mobile Search Bar -->
-                <div class="sm:hidden">
-                    <input type="text" id="catalog-search-mobile" onkeyup="syncSearch(this.value)" placeholder="Search pharmacy, fruit juices, frozen food..." class="w-full bg-dark-800 border border-dark-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500">
-                </div>
-
-                <!-- Category Filter Tabs -->
-                <div id="store-catalog" class="scroll-mt-24 flex items-center justify-between flex-wrap gap-4">
-                    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1">
-                        <button onclick="filterCatalog('all')" id="tab-all" class="cat-tab px-4 py-2 rounded-xl font-semibold text-xs sm:text-sm whitespace-nowrap bg-emerald-500 text-dark-950 shadow-md transition">All Items</button>
-                        <button onclick="filterCatalog('pharmacy')" id="tab-pharmacy" class="cat-tab px-4 py-2 rounded-xl font-medium text-xs sm:text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">💊 Pharmacy</button>
-                        <button onclick="filterCatalog('juice')" id="tab-juice" class="cat-tab px-4 py-2 rounded-xl font-medium text-xs sm:text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">🧃 Fruit Juices</button>
-                        <button onclick="filterCatalog('frozen')" id="tab-frozen" class="cat-tab px-4 py-2 rounded-xl font-medium text-xs sm:text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">❄️ Frozen Foods</button>
-                    </div>
-                    <p id="catalog-count" class="text-xs text-gray-400 font-medium"></p>
-                </div>
-
-                <!-- Product Catalog Grid -->
-                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <div class="col-span-full text-center py-12 text-gray-400">Loading live catalog...</div>
-                </div>
-
-                <!-- Prescription & Custom Inquiry Section -->
-                <div id="rx-section" class="scroll-mt-24 bg-dark-800 border border-dark-700 rounded-3xl p-6 sm:p-8 shadow-xl">
-                    <div class="max-w-xl mx-auto">
-                        <div class="text-center mb-6">
-                            <span class="text-[11px] uppercase tracking-widest text-emerald-400 font-semibold bg-dark-950/60 px-3 py-1 rounded-full border border-emerald-500/20">Direct Pharmacist & Custom Desk</span>
-                            <h3 class="text-xl font-bold text-white mt-2">Prescription Inquiry / Bulk Order</h3>
-                            <p class="text-xs sm:text-sm text-gray-400 mt-1">Need a specific medication not listed above, or a custom juice order? Send a direct request.</p>
-                        </div>
-                        
-                        <div class="space-y-4 bg-dark-900 p-5 rounded-2xl border border-dark-700">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-gray-300 mb-1.5">Department</label>
-                                    <select id="rx-dept" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 transition text-xs">
-                                        <option value="Pharmacy Prescription / Medicine">💊 Pharmacy Prescription</option>
-                                        <option value="Custom Fruit Juice Pack">🧃 Custom Fruit Juice Pack</option>
-                                        <option value="Bulk Frozen Foods Order">❄️ Bulk Frozen Foods Order</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-gray-300 mb-1.5">Your Name</label>
-                                    <input type="text" id="rx-name" placeholder="Enter your name" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 transition text-xs">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div>
-                                    <div class="flex items-center justify-between mb-1">
-                                        <label class="text-[11px] font-semibold uppercase tracking-wider text-gray-300">Location / Zone</label>
-                                        <button type="button" onclick="getGPSLocation('rx-location', 'gps-btn-text')" class="text-[11px] text-emerald-400 hover:text-emerald-300 font-medium flex items-center space-x-1 transition">
-                                            <span>📍</span>
-                                            <span id="gps-btn-text">Use GPS</span>
-                                        </button>
-                                    </div>
-                                    <input type="text" id="rx-location" placeholder="e.g. Ashaiman Zone 5" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 transition text-xs">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-semibold uppercase tracking-wider text-gray-300 mb-1.5">Delivery Time</label>
-                                    <select id="rx-availability" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 transition text-xs">
-                                        <option value="Immediate / As soon as possible">⚡ Immediate / ASAP</option>
-                                        <option value="This Morning / Afternoon">☀️ Today (Morning/Afternoon)</option>
-                                        <option value="This Evening">🌙 Today (Evening)</option>
-                                        <option value="Scheduled / Tomorrow">📅 Scheduled / Tomorrow</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label class="block text-[11px] font-semibold uppercase tracking-wider text-gray-300 mb-1.5">Order Details</label>
-                                <textarea id="rx-details" rows="2" placeholder="e.g., Amoxicillin 500mg, or 20 bottles of juice..." class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-emerald-500 transition text-xs"></textarea>
-                            </div>
-
-                            <button onclick="sendInquiryWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition text-xs uppercase tracking-wider">
-                                Send Request via WhatsApp
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
             </div>
+        </div>
 
-            <!-- Right Side: Persistent / Side-by-Side Cart Panel -->
-            <div id="cart-container-sidebar" class="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-28 bg-dark-800 border border-dark-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden mb-12">
-                <div class="p-4 bg-dark-900 border-b border-dark-700 flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                        <h3 class="font-bold text-white text-sm">Your Cart</h3>
+        <!-- Mobile Search Bar -->
+        <div class="sm:hidden mb-6">
+            <input type="text" id="catalog-search-mobile" onkeyup="syncSearch(this.value)" placeholder="Search pharmacy, fruit juices, frozen food..." class="w-full bg-dark-800 border border-dark-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div id="store-catalog" class="scroll-mt-24 flex items-center justify-between flex-wrap gap-4 mb-6">
+            <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1">
+                <button onclick="filterCatalog('all')" id="tab-all" class="cat-tab px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-emerald-500 text-dark-950 shadow-md transition">All Items</button>
+                <button onclick="filterCatalog('pharmacy')" id="tab-pharmacy" class="cat-tab px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">💊 Pharmacy & Wellness</button>
+                <button onclick="filterCatalog('juice')" id="tab-juice" class="cat-tab px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">🧃 Fruit Juices</button>
+                <button onclick="filterCatalog('frozen')" id="tab-frozen" class="cat-tab px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">❄️ Frozen Foods</button>
+            </div>
+            <p id="catalog-count" class="text-xs text-gray-400 font-medium"></p>
+        </div>
+
+        <!-- Product Catalog Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
+            <div class="col-span-full text-center py-12 text-gray-400">Loading live catalog...</div>
+        </div>
+
+        <!-- Prescription & Custom Juice/Bulk Order Inquiry Section -->
+        <div id="rx-section" class="scroll-mt-24 bg-dark-800 border border-dark-700 rounded-3xl p-6 sm:p-10 mb-16 shadow-xl">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-6">
+                    <span class="text-xs uppercase tracking-widest text-emerald-400 font-semibold bg-dark-950/60 px-3 py-1 rounded-full border border-emerald-500/20">Direct Pharmacist & Custom Desk</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mt-3">Prescription Inquiry / Custom Juice & Bulk Order</h3>
+                    <p class="text-sm text-gray-400 mt-1">Need a specific medication not listed above, or want a custom fruit juice pack for an event? Send a direct request to our desk.</p>
+                </div>
+                
+                <div class="space-y-4 bg-dark-900 p-5 sm:p-6 rounded-2xl border border-dark-700">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Department</label>
+                            <select id="rx-dept" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                                <option value="Pharmacy Prescription / Medicine">💊 Pharmacy Prescription / Medicine</option>
+                                <option value="Custom Fruit Juice Pack">🧃 Custom Fruit Juice Pack</option>
+                                <option value="Bulk Frozen Foods Order">❄️ Bulk Frozen Foods Order</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="rx-name" placeholder="Enter your name" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                        </div>
                     </div>
-                    <span id="cart-item-count-badge" class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full font-medium">0 items</span>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300">Your Location / Zone</label>
+                                <button type="button" onclick="getGPSLocation('rx-location', 'gps-btn-text')" class="text-xs text-emerald-400 hover:text-emerald-300 font-medium flex items-center space-x-1 transition">
+                                    <span>📍</span>
+                                    <span id="gps-btn-text">Use GPS Location</span>
+                                </button>
+                            </div>
+                            <input type="text" id="rx-location" placeholder="e.g. Ashaiman Lebanon Zone 5" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Availability / Delivery Time</label>
+                            <select id="rx-availability" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                                <option value="Immediate / As soon as possible">⚡ Immediate / As soon as possible</option>
+                                <option value="This Morning / Afternoon">☀️ Today (Morning / Afternoon)</option>
+                                <option value="This Evening">🌙 Today (Evening)</option>
+                                <option value="Scheduled / Tomorrow">📅 Scheduled / Tomorrow</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Medication Name / Order Details</label>
+                        <textarea id="rx-details" rows="3" placeholder="e.g., Amoxicillin 500mg, or 20 bottles of Pineapple-Ginger Juice..." class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm"></textarea>
+                    </div>
+
+                    <button onclick="sendInquiryWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition">
+                        Send Request via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-dark-800 border-l border-dark-700 shadow-2xl flex flex-col">
+                <div class="p-5 bg-dark-900 border-b border-dark-700 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <h3 class="text-lg font-bold text-white">Your SpotLight Cart</h3>
+                    </div>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2 rounded-lg bg-dark-800 hover:bg-dark-700 transition">✕</button>
                 </div>
 
-                <!-- Cart Items List Scrollable Area -->
-                <div id="cart-items-container" class="max-h-72 overflow-y-auto p-4 space-y-3 divide-y divide-dark-700/50"></div>
+                <div id="cart-items-container" class="flex-grow overflow-y-auto p-5 space-y-4 divide-y divide-dark-700/50"></div>
 
-                <!-- Cart Totals & Checkout Form -->
-                <div class="p-4 bg-dark-900 border-t border-dark-700 space-y-3">
+                <div class="p-5 bg-dark-900 border-t border-dark-700 space-y-4">
                     <div>
-                        <label class="block text-[10px] font-semibold uppercase tracking-wider text-gray-300 mb-1">Select Delivery Hub</label>
-                        <select id="delivery-location" onchange="updateCartTotals()" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-emerald-500 transition">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5">Select Delivery Location / Hub</label>
+                        <select id="delivery-location" onchange="updateCartTotals()" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500 transition">
                             <option value="0">Store Pickup / Gbetsiley Direct (GH₵ 0.00)</option>
                             <option value="20">Ashaiman Lebanon Zone 5 (GH₵ 20.00)</option>
                             <option value="20">Tema Comm. 22 Pink Lady Road (GH₵ 20.00)</option>
@@ -259,7 +254,7 @@
                         </select>
                     </div>
 
-                    <div class="space-y-1 text-xs pt-1 border-t border-dark-800">
+                    <div class="space-y-1.5 text-sm pt-2 border-t border-dark-800">
                         <div class="flex justify-between text-gray-300">
                             <span>Subtotal</span>
                             <span id="cart-subtotal" class="font-semibold text-white">GH₵ 0.00</span>
@@ -268,37 +263,35 @@
                             <span>Delivery Fee</span>
                             <span id="cart-delivery-fee" class="font-semibold text-white">GH₵ 0.00</span>
                         </div>
-                        <div class="flex justify-between text-sm font-extrabold text-white pt-1.5 border-t border-dark-700">
+                        <div class="flex justify-between text-base font-extrabold text-white pt-2 border-t border-dark-700">
                             <span>Grand Total</span>
                             <span id="cart-grand-total" class="text-emerald-400">GH₵ 0.00</span>
                         </div>
                     </div>
 
-                    <div class="space-y-2 pt-1">
-                        <input type="text" id="customer-name" placeholder="Your Full Name" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 transition">
+                    <div class="space-y-2 pt-2">
+                        <input type="text" id="customer-name" placeholder="Your Full Name" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
                         
-                        <!-- Address with GPS Pin Button -->
+                        <!-- Address with GPS Button -->
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <label class="text-[10px] text-gray-300 uppercase font-semibold">Delivery Address / Landmark</label>
-                                <button type="button" onclick="getGPSLocation('customer-address', 'cart-gps-btn')" class="text-[10px] text-emerald-400 hover:text-emerald-300 font-medium flex items-center space-x-1 transition">
+                                <label class="text-[11px] text-gray-300 uppercase font-semibold">Delivery Address / Landmark</label>
+                                <button type="button" onclick="getGPSLocation('customer-address', 'cart-gps-btn')" class="text-xs text-emerald-400 hover:text-emerald-300 font-medium flex items-center space-x-1 transition">
                                     <span>📍</span>
                                     <span id="cart-gps-btn">Use GPS Pin</span>
                                 </button>
                             </div>
-                            <input type="text" id="customer-address" placeholder="Address or GPS Pin" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 transition">
+                            <input type="text" id="customer-address" placeholder="Delivery Address / Landmark or GPS Pin" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
                         </div>
                     </div>
 
-                    <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-4 rounded-xl shadow-lg flex items-center justify-center space-x-2 transition text-xs uppercase tracking-wider">
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg flex items-center justify-center space-x-2 transition">
                         <span>Send Order via WhatsApp</span>
                     </button>
                 </div>
             </div>
-
         </div>
-
-    </main>
+    </div>
 
     <!-- Admin Modal -->
     <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
@@ -403,13 +396,13 @@
 
         document.addEventListener('DOMContentLoaded', async () => {
             updateCartBadge();
-            renderCartItems();
             await loadProductsFromCloud();
         });
 
         async function loadProductsFromCloud() {
             const statusBadge = document.getElementById('cloud-status-badge');
             
+            // Safety timeout controller (fails gracefully if cloud takes over 3 seconds)
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 3000);
 
@@ -425,7 +418,7 @@
                 localStorage.setItem('spotlight_products', JSON.stringify(products));
                 statusBadge.innerText = '● Live Synced';
             } catch (err) {
-                console.warn('Using local/fallback storage.');
+                console.warn('Using local/fallback storage due to network timeout or offline state.');
                 products = JSON.parse(localStorage.getItem('spotlight_products')) || fallbackProducts;
                 statusBadge.innerText = '● Offline Mode';
             }
@@ -491,35 +484,35 @@
                 let btnClass = 'bg-emerald-600 hover:bg-emerald-500 text-white';
 
                 if (p.stock === 'in-stock') {
-                    stockBadge = `<span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/30 font-medium">In Stock</span>`;
+                    stockBadge = `<span class="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/30 font-medium">In Stock</span>`;
                 } else if (p.stock === 'low-stock') {
-                    stockBadge = `<span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/30 font-medium">Low Stock</span>`;
+                    stockBadge = `<span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded-full border border-amber-500/30 font-medium">Low Stock</span>`;
                 } else {
-                    stockBadge = `<span class="text-[10px] bg-rose-500/20 text-rose-400 px-2 py-0.5 rounded-full border border-rose-500/30 font-medium">Out of Stock</span>`;
+                    stockBadge = `<span class="text-xs bg-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full border border-rose-500/30 font-medium">Out of Stock</span>`;
                     btnDisabled = 'disabled';
                     btnClass = 'bg-gray-700 text-gray-400 cursor-not-allowed';
                 }
 
                 const placeholderIcon = p.category === 'pharmacy' ? '💊' : (p.category === 'juice' ? '🧃' : '❄️');
                 const imageHtml = p.image ? 
-                    `<img src="${p.image}" alt="${p.name}" class="w-full h-36 object-cover rounded-xl mb-3">` :
-                    `<div class="w-full h-36 bg-dark-900 rounded-xl mb-3 flex items-center justify-center border border-dark-700 text-4xl">
+                    `<img src="${p.image}" alt="${p.name}" class="w-full h-44 object-cover rounded-xl mb-4">` :
+                    `<div class="w-full h-44 bg-dark-900 rounded-xl mb-4 flex items-center justify-center border border-dark-700 text-5xl">
                         ${placeholderIcon}
                      </div>`;
 
                 const card = document.createElement('div');
-                card.className = `bg-dark-800 border border-dark-700 rounded-2xl p-4 flex flex-col justify-between shadow-xl transition hover:border-emerald-500/40`;
+                card.className = `bg-dark-800 border border-dark-700 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-xl transition hover:border-emerald-500/40`;
                 card.innerHTML = `
                     <div>
                         ${imageHtml}
-                        <div class="flex items-center justify-between mb-1.5">
-                            <span class="text-[10px] uppercase tracking-wider text-gray-400 font-semibold">${categoryLabels[p.category] || p.category}</span>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold">${categoryLabels[p.category] || p.category}</span>
                             ${stockBadge}
                         </div>
-                        <h3 class="font-bold text-white text-sm mb-1">${p.name}</h3>
-                        <p class="text-emerald-400 font-extrabold text-sm mb-3">GH₵ ${p.price.toFixed(2)} <span class="text-[10px] text-gray-400 font-normal">/ ${p.unit}</span></p>
+                        <h3 class="font-bold text-white text-base sm:text-lg mb-1">${p.name}</h3>
+                        <p class="text-emerald-400 font-extrabold text-lg mb-4">GH₵ ${p.price.toFixed(2)} <span class="text-xs text-gray-400 font-normal">/ ${p.unit}</span></p>
                     </div>
-                    <button onclick="addToCart('${p.id}')" ${btnDisabled} class="w-full font-bold py-2 px-3 rounded-xl shadow transition text-xs ${btnClass}">
+                    <button onclick="addToCart('${p.id}')" ${btnDisabled} class="w-full font-bold py-2.5 px-4 rounded-xl shadow transition ${btnClass}">
                         ${p.stock === 'out-of-stock' ? 'Out of Stock' : 'Add to Cart'}
                     </button>
                 `;
@@ -548,6 +541,7 @@
             if (existing) { existing.quantity += 1; } else { cart.push({ ...product, quantity: 1 }); }
             updateCartBadge();
             renderCartItems();
+            toggleCart();
         }
 
         function updateQuantity(productId, change) {
@@ -563,35 +557,34 @@
         function updateCartBadge() {
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cart-badge').innerText = totalCount;
-            document.getElementById('cart-item-count-badge').innerText = `${totalCount} item${totalCount === 1 ? '' : 's'}`;
         }
 
-        // Main cart is now persistent side-by-side; toggleCart can scroll to cart on mobile if needed
         function toggleCart() {
-            const cartSidebar = document.getElementById('cart-container-sidebar');
-            cartSidebar.scrollIntoView({ behavior: 'smooth' });
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+            if (!drawer.classList.contains('hidden')) { renderCartItems(); }
         }
 
         function renderCartItems() {
             const container = document.getElementById('cart-items-container');
             container.innerHTML = '';
             if (cart.length === 0) {
-                container.innerHTML = `<div class="text-center py-6 text-gray-400 text-xs">Your cart is currently empty.</div>`;
+                container.innerHTML = `<div class="text-center py-12 text-gray-400">Your cart is currently empty.</div>`;
                 updateCartTotals();
                 return;
             }
             cart.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'pt-3 first:pt-0 flex items-center justify-between text-xs';
+                div.className = 'pt-4 first:pt-0 flex items-center justify-between';
                 div.innerHTML = `
-                    <div class="pr-2">
-                        <h4 class="font-bold text-white">${item.name}</h4>
-                        <p class="text-[11px] text-emerald-400 font-semibold mt-0.5">GH₵ ${item.price.toFixed(2)} x ${item.quantity}</p>
+                    <div class="pr-3">
+                        <h4 class="font-bold text-white text-sm">${item.name}</h4>
+                        <p class="text-xs text-emerald-400 font-semibold mt-0.5">GH₵ ${item.price.toFixed(2)} x ${item.quantity}</p>
                     </div>
-                    <div class="flex items-center space-x-1.5 shrink-0">
-                        <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 bg-dark-700 hover:bg-dark-600 rounded-lg text-white font-bold flex items-center justify-center">-</button>
-                        <span class="font-bold w-4 text-center">${item.quantity}</span>
-                        <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 bg-dark-700 hover:bg-dark-600 rounded-lg text-white font-bold flex items-center justify-center">+</button>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="updateQuantity('${item.id}', -1)" class="w-7 h-7 bg-dark-700 hover:bg-dark-600 rounded-lg text-white font-bold flex items-center justify-center">-</button>
+                        <span class="text-sm font-bold w-5 text-center">${item.quantity}</span>
+                        <button onclick="updateQuantity('${item.id}', 1)" class="w-7 h-7 bg-dark-700 hover:bg-dark-600 rounded-lg text-white font-bold flex items-center justify-center">+</button>
                     </div>
                 `;
                 container.appendChild(div);
@@ -653,7 +646,7 @@
             }
 
             const originalText = btnText.innerText;
-            btnText.innerText = 'Detecting...';
+            btnText.innerText = 'Detecting GPS...';
 
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -662,12 +655,12 @@
                     const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
                     
                     locationInput.value = `GPS Pin: ${lat.toFixed(5)}, ${lon.toFixed(5)} (${mapsLink})`;
-                    btnText.innerText = '✓ Captured!';
+                    btnText.innerText = '✓ GPS Captured!';
                     setTimeout(() => { btnText.innerText = originalText; }, 4000);
                 },
                 (error) => {
                     console.error(error);
-                    alert('Unable to retrieve your location. Please check permissions.');
+                    alert('Unable to retrieve your location. Please check your device permissions or type it manually.');
                     btnText.innerText = originalText;
                 },
                 { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -744,13 +737,13 @@
             if (!product) return;
 
             const newPrice = parseFloat(document.getElementById(`price-input-${productId}`).value);
-            const newStock = document.getElementById(`stock-input-${productId)->value` || document.getElementById(`stock-input-${productId}`).value);
+            const newStock = document.getElementById(`stock-input-${productId}`).value;
             const newImage = document.getElementById(`img-input-${productId}`).value.trim();
 
             if (isNaN(newPrice)) { alert('Please enter a valid price.'); return; }
 
             product.price = newPrice;
-            product.stock = document.getElementById(`stock-input-${productId}`).value;
+            product.stock = newStock;
             product.image = newImage;
 
             syncProductsToCloud();
