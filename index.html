@@ -262,11 +262,11 @@
     <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleAdminModal()"></div>
         <div class="flex items-center justify-center min-h-screen p-4 relative z-10">
-            <div class="bg-dark-800 border border-dark-700 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative">
+            <div class="bg-dark-800 border border-dark-700 rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl relative">
                 <div class="flex items-center justify-between pb-4 border-b border-dark-700 mb-6">
                     <div>
                         <h3 class="text-xl font-bold text-white">SpotLight Cloud Store Manager</h3>
-                        <p class="text-xs text-emerald-400">Changes saved here update globally for all customers in real-time.</p>
+                        <p class="text-xs text-emerald-400">Update prices, stock, images & sync globally in real-time.</p>
                     </div>
                     <button onclick="toggleAdminModal()" class="text-gray-400 hover:text-white p-2 rounded-lg bg-dark-900 hover:bg-dark-700 transition">✕</button>
                 </div>
@@ -305,10 +305,10 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-sm font-bold text-gray-300 uppercase tracking-wide">Manage Existing Catalog</h4>
+                            <h4 class="text-sm font-bold text-gray-300 uppercase tracking-wide">Manage & Update Existing Catalog</h4>
                             <span id="admin-save-status" class="text-xs text-emerald-400 font-semibold"></span>
                         </div>
-                        <div id="admin-product-list" class="space-y-2 max-h-64 overflow-y-auto pr-2"></div>
+                        <div id="admin-product-list" class="space-y-3 max-h-80 overflow-y-auto pr-2"></div>
                     </div>
                 </div>
             </div>
@@ -332,7 +332,7 @@
     <!-- Script Logic -->
     <script>
         // =========================================================================
-        // PASTE YOUR JSONBIN KEYS BELOW FOR REAL-TIME CLOUD SYNC
+        // JSONBIN CLOUD CONFIGURATION (CONFIGURED)
         // =========================================================================
         const JSONBIN_BIN_ID = '6af6cb0fac6210605a846e45';
         const JSONBIN_API_KEY = '$2a$10$EQueRDn8UeTLOAxC80QQXO0jpKomw6CVVJNKNvtXamS13ZQqaClpe';
@@ -366,13 +366,6 @@
 
         async function loadProductsFromCloud() {
             const statusBadge = document.getElementById('cloud-status-badge');
-            if (JSONBIN_BIN_ID === 'PASTE_YOUR_BIN_ID_HERE' || !JSONBIN_BIN_ID) {
-                products = JSON.parse(localStorage.getItem('spotlight_products')) || fallbackProducts;
-                statusBadge.innerText = 'Local Mode';
-                renderCatalog();
-                return;
-            }
-
             try {
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}/latest`, {
                     headers: { 'X-Master-Key': JSONBIN_API_KEY }
@@ -394,12 +387,6 @@
             localStorage.setItem('spotlight_products', JSON.stringify(products));
             const adminStatus = document.getElementById('admin-save-status');
             if (adminStatus) adminStatus.innerText = 'Saving to cloud...';
-
-            if (JSONBIN_BIN_ID === 'PASTE_YOUR_BIN_ID_HERE' || !JSONBIN_BIN_ID) {
-                if (adminStatus) adminStatus.innerText = 'Saved locally';
-                renderCatalog();
-                return;
-            }
 
             try {
                 const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`, {
@@ -636,32 +623,53 @@
             listContainer.innerHTML = '';
             products.forEach(p => {
                 const div = document.createElement('div');
-                div.className = 'bg-dark-800 p-3 rounded-lg border border-dark-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm';
+                div.className = 'bg-dark-900 p-3 rounded-xl border border-dark-700 flex flex-col gap-2 text-sm';
                 div.innerHTML = `
-                    <div>
-                        <p class="font-bold text-white">${p.name}</p>
-                        <p class="text-xs text-emerald-400">GH₵ ${p.price.toFixed(2)} • ${p.category} (${p.stock})</p>
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-white">${p.name}</span>
+                        <button onclick="deleteProduct('${p.id}')" class="bg-rose-500/20 hover:bg-rose-500 text-rose-400 hover:text-white px-2 py-0.5 rounded text-xs transition">Delete</button>
                     </div>
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <input type="text" id="img-input-${p.id}" placeholder="Paste image link" class="bg-dark-900 border border-dark-600 rounded px-2 py-1 text-xs text-white flex-grow sm:w-40">
-                        <button onclick="updateProductImage('${p.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded text-xs transition">Add Img</button>
-                        <button onclick="deleteProduct('${p.id}')" class="bg-rose-500/20 hover:bg-rose-500 text-rose-400 hover:text-white px-2.5 py-1 rounded text-xs transition">Del</button>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div>
+                            <label class="text-[10px] text-gray-400 uppercase">Price (GH₵)</label>
+                            <input type="number" id="price-input-${p.id}" value="${p.price}" class="w-full bg-dark-800 border border-dark-600 rounded px-2 py-1 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-gray-400 uppercase">Stock Status</label>
+                            <select id="stock-input-${p.id}" class="w-full bg-dark-800 border border-dark-600 rounded px-2 py-1 text-xs text-white">
+                                <option value="in-stock" ${p.stock === 'in-stock' ? 'selected' : ''}>In Stock</option>
+                                <option value="low-stock" ${p.stock === 'low-stock' ? 'selected' : ''}>Low Stock</option>
+                                <option value="out-of-stock" ${p.stock === 'out-of-stock' ? 'selected' : ''}>Out of Stock</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-gray-400 uppercase">Image URL</label>
+                            <input type="text" id="img-input-${p.id}" value="${p.image || ''}" placeholder="Paste image link" class="w-full bg-dark-800 border border-dark-600 rounded px-2 py-1 text-xs text-white">
+                        </div>
                     </div>
+                    <button onclick="updateProductDetails('${p.id}')" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-1.5 rounded text-xs transition mt-1">Update & Sync Changes</button>
                 `;
                 listContainer.appendChild(div);
             });
         }
 
-        function updateProductImage(productId) {
-            const inputVal = document.getElementById(`img-input-${productId}`).value.trim();
-            if (!inputVal) { alert('Please paste a valid image link first.'); return; }
+        function updateProductDetails(productId) {
             const product = products.find(p => p.id === productId);
-            if (product) {
-                product.image = inputVal;
-                syncProductsToCloud();
-                renderAdminProductList();
-                alert('Product image updated and synced globally!');
-            }
+            if (!product) return;
+
+            const newPrice = parseFloat(document.getElementById(`price-input-${productId}`).value);
+            const newStock = document.getElementById(`stock-input-${productId}`).value;
+            const newImage = document.getElementById(`img-input-${productId}`).value.trim();
+
+            if (isNaN(newPrice)) { alert('Please enter a valid price.'); return; }
+
+            product.price = newPrice;
+            product.stock = newStock;
+            product.image = newImage;
+
+            syncProductsToCloud();
+            renderAdminProductList();
+            alert('Product updated and synced globally in real-time!');
         }
 
         function deleteProduct(productId) {
