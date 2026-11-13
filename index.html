@@ -1,1 +1,613 @@
-# spotlight-storefront
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpotLight | Pharmacy, Fresh Juices & Frozen Foods</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#06110E',
+                            900: '#0A1915',
+                            800: '#102620',
+                            700: '#18372F',
+                        },
+                        emerald: {
+                            400: '#34D399',
+                            500: '#10B981',
+                            600: '#059669',
+                        },
+                        amber: {
+                            400: '#FBBF24',
+                            500: '#F59E0B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body id="top" class="bg-dark-900 text-gray-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Top Utility Announcement Bar -->
+    <div class="bg-dark-950 border-b border-dark-800 text-xs text-gray-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+            <div class="flex items-center space-x-1.5 text-emerald-400 font-medium">
+                <span>⚡</span>
+                <span>24/7 Pharmacy Essentials, Cold-Pressed Juices & Fresh Frozen Foods</span>
+            </div>
+            <div class="font-semibold text-white">
+                Order / Pharmacist Desk: <a href="https://wa.me/233240879793" target="_blank" class="text-emerald-400 hover:underline">0240879793</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-1 text-gray-400">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                <span>Hub: Gbetsiley / Tema - Accra</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="bg-dark-900/95 backdrop-blur-md border-b border-dark-800 sticky top-0 z-40 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Brand Logo & Tagline -->
+            <a href="#top" class="flex items-center space-x-3 shrink-0">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-500 to-amber-500 flex items-center justify-center shadow-lg text-dark-950 font-black text-xl">
+                    SL
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-extrabold tracking-wide text-white uppercase leading-tight">
+                        SPOTLIGHT <span class="text-emerald-400">ENTERPRISE</span>
+                    </h1>
+                    <p class="text-[10px] tracking-[0.2em] text-amber-400/90 font-semibold uppercase">HEALTH. FRESHNESS. QUALITY.</p>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden xl:flex items-center space-x-5 text-sm font-medium text-gray-300">
+                <a href="#top" onclick="filterCatalog('all')" class="flex items-center space-x-1.5 text-emerald-400 hover:text-emerald-300 transition">
+                    <span>🏠</span><span>All</span>
+                </a>
+                <a href="#store-catalog" onclick="filterCatalog('pharmacy')" class="flex items-center space-x-1.5 hover:text-emerald-400 transition">
+                    <span>💊</span><span>Pharmacy</span>
+                </a>
+                <a href="#store-catalog" onclick="filterCatalog('juice')" class="flex items-center space-x-1.5 hover:text-amber-400 transition">
+                    <span>🧃</span><span>Fruit Juice</span>
+                </a>
+                <a href="#store-catalog" onclick="filterCatalog('frozen')" class="flex items-center space-x-1.5 hover:text-emerald-400 transition">
+                    <span>❄️</span><span>Frozen Foods</span>
+                </a>
+                <a href="#rx-section" class="flex items-center space-x-1.5 hover:text-emerald-400 transition">
+                    <span>📋</span><span>Prescription Request</span>
+                </a>
+            </nav>
+
+            <!-- Search Bar & Cart Button -->
+            <div class="flex items-center space-x-3 flex-grow sm:flex-grow-0 justify-end">
+                <div class="relative hidden sm:block w-48 md:w-60">
+                    <input type="text" id="catalog-search" onkeyup="renderCatalog()" placeholder="Search meds, juices, meats..." class="w-full bg-dark-800 border border-dark-700 rounded-full pl-9 pr-4 py-2 text-xs text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500 transition">
+                    <svg class="w-4 h-4 text-gray-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+
+                <button onclick="toggleCart()" class="relative bg-dark-800 hover:bg-dark-700 border border-dark-700 text-white p-2.5 rounded-xl shadow-lg flex items-center space-x-2 transition">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-amber-500 text-dark-950 text-xs font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- Enterprise Hero Banner -->
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-dark-950 via-dark-800 to-emerald-900/70 border border-emerald-500/20 p-8 sm:p-12 lg:p-14 mb-10 shadow-2xl">
+            <div class="relative z-10 max-w-2xl">
+                <span class="inline-block text-[11px] uppercase tracking-widest text-amber-400 font-bold bg-dark-950/90 px-3.5 py-1.5 rounded-full border border-amber-500/30 mb-5">
+                    PHARMACY • FRESH JUICE BAR • FROZEN FOODS
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                    Trusted Care.<br>
+                    <span class="text-emerald-400">Natural Refreshment.</span>
+                </h2>
+                <p class="text-sm sm:text-base text-gray-300 mt-4 leading-relaxed">
+                    Welcome to <strong class="text-white">SpotLight</strong>. Order certified over-the-counter medicines, 100% natural cold-pressed fruit juices, and hygienically packed frozen proteins—delivered straight to your doorstep.
+                </p>
+                <div class="flex flex-wrap items-center gap-3 mt-8">
+                    <a href="#store-catalog" onclick="filterCatalog('pharmacy')" class="inline-flex items-center space-x-2 bg-emerald-500 hover:bg-emerald-400 text-dark-950 font-bold px-5 py-3 rounded-xl shadow-lg transition">
+                        <span>💊</span>
+                        <span>Shop Pharmacy</span>
+                    </a>
+                    <a href="#store-catalog" onclick="filterCatalog('juice')" class="inline-flex items-center space-x-2 bg-amber-500 hover:bg-amber-400 text-dark-950 font-bold px-5 py-3 rounded-xl shadow-lg transition">
+                        <span>🧃</span>
+                        <span>Fresh Juices</span>
+                    </a>
+                    <a href="#store-catalog" onclick="filterCatalog('frozen')" class="inline-flex items-center space-x-2 bg-dark-900/90 hover:bg-dark-700 text-white font-semibold px-5 py-3 rounded-xl border border-dark-600 transition">
+                        <span>❄️</span>
+                        <span>Frozen Foods</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Search Bar -->
+        <div class="sm:hidden mb-6">
+            <input type="text" id="catalog-search-mobile" onkeyup="syncSearch(this.value)" placeholder="Search pharmacy, fruit juices, frozen food..." class="w-full bg-dark-800 border border-dark-700 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <!-- Category Filter Tabs -->
+        <div id="store-catalog" class="scroll-mt-24 flex items-center justify-between flex-wrap gap-4 mb-6">
+            <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar pb-1">
+                <button onclick="filterCatalog('all')" id="tab-all" class="cat-tab px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-emerald-500 text-dark-950 shadow-md transition">All Items</button>
+                <button onclick="filterCatalog('pharmacy')" id="tab-pharmacy" class="cat-tab px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">💊 Pharmacy & Wellness</button>
+                <button onclick="filterCatalog('juice')" id="tab-juice" class="cat-tab px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">🧃 Fruit Juices</button>
+                <button onclick="filterCatalog('frozen')" id="tab-frozen" class="cat-tab px-5 py-2.5 rounded-xl font-medium text-sm whitespace-nowrap bg-dark-800 text-gray-300 hover:bg-dark-700 border border-dark-700 transition">❄️ Frozen Foods</button>
+            </div>
+            <p id="catalog-count" class="text-xs text-gray-400 font-medium"></p>
+        </div>
+
+        <!-- Product Catalog Grid -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16"></div>
+
+        <!-- Prescription & Custom Juice/Bulk Order Inquiry Section -->
+        <div id="rx-section" class="scroll-mt-24 bg-dark-800 border border-dark-700 rounded-3xl p-6 sm:p-10 mb-16 shadow-xl">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-6">
+                    <span class="text-xs uppercase tracking-widest text-emerald-400 font-semibold bg-dark-950/60 px-3 py-1 rounded-full border border-emerald-500/20">Direct Pharmacist & Custom Desk</span>
+                    <h3 class="text-xl sm:text-2xl font-bold text-white mt-3">Prescription Inquiry / Custom Juice & Bulk Order</h3>
+                    <p class="text-sm text-gray-400 mt-1">Need a specific medication not listed above, or want a custom fruit juice pack for an event? Send a direct request to our desk.</p>
+                </div>
+                
+                <div class="space-y-4 bg-dark-900 p-5 sm:p-6 rounded-2xl border border-dark-700">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Department</label>
+                            <select id="rx-dept" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                                <option value="Pharmacy Prescription / Medicine">💊 Pharmacy Prescription / Medicine</option>
+                                <option value="Custom Fruit Juice Pack">🧃 Custom Fruit Juice Pack</option>
+                                <option value="Bulk Frozen Foods Order">❄️ Bulk Frozen Foods Order</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Your Name</label>
+                            <input type="text" id="rx-name" placeholder="Enter your name" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Medication Name / Order Details</label>
+                        <textarea id="rx-details" rows="3" placeholder="e.g., Amoxicillin 500mg, or 20 bottles of Pineapple-Ginger Juice..." class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm"></textarea>
+                    </div>
+
+                    <button onclick="sendInquiryWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg transition">
+                        Send Request via WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity" onclick="toggleCart()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-dark-800 border-l border-dark-700 shadow-2xl flex flex-col">
+                <div class="p-5 bg-dark-900 border-b border-dark-700 flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <h3 class="text-lg font-bold text-white">Your SpotLight Cart</h3>
+                    </div>
+                    <button onclick="toggleCart()" class="text-gray-400 hover:text-white p-2 rounded-lg bg-dark-800 hover:bg-dark-700 transition">✕</button>
+                </div>
+
+                <div id="cart-items-container" class="flex-grow overflow-y-auto p-5 space-y-4 divide-y divide-dark-700/50"></div>
+
+                <div class="p-5 bg-dark-900 border-t border-dark-700 space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-1.5">Select Delivery Location / Hub</label>
+                        <select id="delivery-location" onchange="updateCartTotals()" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3.5 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500 transition">
+                            <option value="0">Store Pickup / Gbetsiley Direct (GH₵ 0.00)</option>
+                            <option value="15">Ashaiman Environs (GH₵ 15.00)</option>
+                            <option value="25">Tema Central & Community Areas (GH₵ 25.00)</option>
+                            <option value="35">Spintex / East Legon (GH₵ 35.00)</option>
+                            <option value="50">Greater Accra Environs (GH₵ 50.00)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1.5 text-sm pt-2 border-t border-dark-800">
+                        <div class="flex justify-between text-gray-300">
+                            <span>Subtotal</span>
+                            <span id="cart-subtotal" class="font-semibold text-white">GH₵ 0.00</span>
+                        </div>
+                        <div class="flex justify-between text-gray-300">
+                            <span>Delivery Fee</span>
+                            <span id="cart-delivery-fee" class="font-semibold text-white">GH₵ 0.00</span>
+                        </div>
+                        <div class="flex justify-between text-base font-extrabold text-white pt-2 border-t border-dark-700">
+                            <span>Grand Total</span>
+                            <span id="cart-grand-total" class="text-emerald-400">GH₵ 0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 pt-2">
+                        <input type="text" id="customer-name" placeholder="Your Full Name" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                        <input type="text" id="customer-address" placeholder="Delivery Address / Landmark" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition">
+                    </div>
+
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg flex items-center justify-center space-x-2 transition">
+                        <span>Send Order via WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleAdminModal()"></div>
+        <div class="flex items-center justify-center min-h-screen p-4 relative z-10">
+            <div class="bg-dark-800 border border-dark-700 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative">
+                <div class="flex items-center justify-between pb-4 border-b border-dark-700 mb-6">
+                    <h3 class="text-xl font-bold text-white">SpotLight Admin Store Manager</h3>
+                    <button onclick="toggleAdminModal()" class="text-gray-400 hover:text-white p-2 rounded-lg bg-dark-900 hover:bg-dark-700 transition">✕</button>
+                </div>
+
+                <div id="admin-auth-container" class="space-y-4">
+                    <p class="text-sm text-gray-300">Enter your admin passcode to manage Pharmacy, Fruit Juice, and Frozen Food items.</p>
+                    <input type="password" id="admin-passcode" onkeyup="if(event.key==='Enter') verifyAdmin()" placeholder="Enter passcode" class="w-full bg-dark-900 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition">
+                    <button onclick="verifyAdmin()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl shadow-lg transition">Unlock Admin Dashboard</button>
+                </div>
+
+                <div id="admin-panel-content" class="hidden space-y-6">
+                    <div class="bg-dark-900 p-4 rounded-xl border border-dark-700">
+                        <h4 class="text-sm font-bold text-emerald-400 uppercase tracking-wide mb-3">Add New Product</h4>
+                        <div class="space-y-3">
+                            <input type="text" id="new-prod-name" placeholder="Product Name" class="w-full bg-dark-800 border border-dark-600 rounded-lg px-3 py-2 text-sm text-white">
+                            <div class="grid grid-cols-2 gap-3">
+                                <select id="new-prod-cat" class="bg-dark-800 border border-dark-600 rounded-lg px-3 py-2 text-sm text-white">
+                                    <option value="pharmacy">Pharmacy & Wellness</option>
+                                    <option value="juice">Fruit Juices</option>
+                                    <option value="frozen">Frozen Foods</option>
+                                </select>
+                                <input type="number" id="new-prod-price" placeholder="Price (GH₵)" class="bg-dark-800 border border-dark-600 rounded-lg px-3 py-2 text-sm text-white">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <select id="new-prod-stock" class="bg-dark-800 border border-dark-600 rounded-lg px-3 py-2 text-sm text-white">
+                                    <option value="in-stock">In Stock</option>
+                                    <option value="low-stock">Low Stock</option>
+                                    <option value="out-of-stock">Out of Stock</option>
+                                </select>
+                                <input type="text" id="new-prod-unit" placeholder="Unit (e.g. bottle / pack / kg)" class="bg-dark-800 border border-dark-600 rounded-lg px-3 py-2 text-sm text-white">
+                            </div>
+                            <input type="text" id="new-prod-img" placeholder="Direct Image URL (optional)" class="w-full bg-dark-800 border border-dark-600 rounded-lg px-3 py-2 text-sm text-white">
+                            <button onclick="addNewProduct()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-lg text-sm transition">Add Product</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-sm font-bold text-gray-300 uppercase tracking-wide mb-2">Manage Existing Catalog</h4>
+                        <div id="admin-product-list" class="space-y-2 max-h-64 overflow-y-auto pr-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark-950 border-t border-dark-800 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+                <p class="font-bold text-white">SpotLight Enterprise</p>
+                <p class="text-xs text-gray-400 mt-1">Certified Pharmacy Essentials, Natural Cold-Pressed Fruit Juices & Frozen Foods.</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleAdminModal()" class="text-xs bg-dark-800 hover:bg-dark-700 px-3.5 py-2 rounded-lg border border-dark-700 text-emerald-400 font-medium transition">Admin Dashboard</button>
+                <p class="text-xs text-gray-400">© 2026 SpotLight. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        // Replace with your SpotLight WhatsApp number (with country code, no +)
+        const STORE_WHATSAPP = '233240879793';
+
+        const defaultProducts = [
+            // Pharmacy & Wellness
+            { id: 'rx1', name: 'Paracetamol 500mg (Box of 20)', category: 'pharmacy', price: 18, stock: 'in-stock', unit: 'box', image: '' },
+            { id: 'rx2', name: 'Vitamin C 1000mg Immune Boost', category: 'pharmacy', price: 45, stock: 'in-stock', unit: 'tube (20 tabs)', image: '' },
+            { id: 'rx3', name: 'Complete First Aid Kit', category: 'pharmacy', price: 130, stock: 'in-stock', unit: 'set', image: '' },
+            { id: 'rx4', name: 'Digital Blood Pressure Monitor', category: 'pharmacy', price: 290, stock: 'low-stock', unit: 'unit', image: '' },
+
+            // Natural Fruit Juices
+            { id: 'fj1', name: 'Fresh Pineapple & Ginger Juice (1L)', category: 'juice', price: 25, stock: 'in-stock', unit: '1L bottle', image: '' },
+            { id: 'fj2', name: 'Pure Watermelon & Mint Splash (500ml)', category: 'juice', price: 15, stock: 'in-stock', unit: '500ml bottle', image: '' },
+            { id: 'fj3', name: 'Tropical Mango & Passion Blend (1L)', category: 'juice', price: 28, stock: 'in-stock', unit: '1L bottle', image: '' },
+            { id: 'fj4', name: 'Spiced Hibiscus (Sobolo) Immunity Pack', category: 'juice', price: 60, stock: 'low-stock', unit: '6-pack', image: '' },
+
+            // Frozen Foods
+            { id: 'ff1', name: 'Fresh Frozen Tilapia (Cleaned)', category: 'frozen', price: 45, stock: 'in-stock', unit: 'per kg', image: '' },
+            { id: 'ff2', name: 'Fresh Cut Goat Meat', category: 'frozen', price: 65, stock: 'in-stock', unit: 'per kg', image: '' },
+            { id: 'ff3', name: 'Premium Chicken Wings', category: 'frozen', price: 40, stock: 'in-stock', unit: 'per kg', image: '' },
+            { id: 'ff4', name: 'Jumbo Sausage Pack', category: 'frozen', price: 55, stock: 'in-stock', unit: 'pack', image: '' }
+        ];
+
+        let products = JSON.parse(localStorage.getItem('spotlight_products')) || defaultProducts;
+        let cart = [];
+        let currentFilter = 'all';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCatalog();
+            updateCartBadge();
+        });
+
+        function syncSearch(val) {
+            document.getElementById('catalog-search').value = val;
+            renderCatalog();
+        }
+
+        function renderCatalog() {
+            const grid = document.getElementById('product-grid');
+            const searchTerm = (document.getElementById('catalog-search')?.value || '').toLowerCase().trim();
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => {
+                const matchesCat = currentFilter === 'all' || p.category === currentFilter;
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.category.toLowerCase().includes(searchTerm);
+                return matchesCat && matchesSearch;
+            });
+
+            document.getElementById('catalog-count').innerText = `Showing ${filtered.length} item${filtered.length === 1 ? '' : 's'}`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">No matching items found. Try another search or category.</div>`;
+                return;
+            }
+
+            const categoryLabels = {
+                pharmacy: '💊 Pharmacy',
+                juice: '🧃 Fruit Juice',
+                frozen: '❄️ Frozen Food'
+            };
+
+            filtered.forEach(p => {
+                let stockBadge = '';
+                let btnDisabled = '';
+                let btnClass = 'bg-emerald-600 hover:bg-emerald-500 text-white';
+
+                if (p.stock === 'in-stock') {
+                    stockBadge = `<span class="text-xs bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded-full border border-emerald-500/30 font-medium">In Stock</span>`;
+                } else if (p.stock === 'low-stock') {
+                    stockBadge = `<span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded-full border border-amber-500/30 font-medium">Low Stock</span>`;
+                } else {
+                    stockBadge = `<span class="text-xs bg-rose-500/20 text-rose-400 px-2.5 py-1 rounded-full border border-rose-500/30 font-medium">Out of Stock</span>`;
+                    btnDisabled = 'disabled';
+                    btnClass = 'bg-gray-700 text-gray-400 cursor-not-allowed';
+                }
+
+                const placeholderIcon = p.category === 'pharmacy' ? '💊' : (p.category === 'juice' ? '🧃' : '❄️');
+                const imageHtml = p.image ? 
+                    `<img src="${p.image}" alt="${p.name}" class="w-full h-44 object-cover rounded-xl mb-4">` :
+                    `<div class="w-full h-44 bg-dark-900 rounded-xl mb-4 flex items-center justify-center border border-dark-700 text-5xl">
+                        ${placeholderIcon}
+                     </div>`;
+
+                const card = document.createElement('div');
+                card.className = `bg-dark-800 border border-dark-700 rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-xl transition hover:border-emerald-500/40`;
+                card.innerHTML = `
+                    <div>
+                        ${imageHtml}
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs uppercase tracking-wider text-gray-400 font-semibold">${categoryLabels[p.category] || p.category}</span>
+                            ${stockBadge}
+                        </div>
+                        <h3 class="font-bold text-white text-base sm:text-lg mb-1">${p.name}</h3>
+                        <p class="text-emerald-400 font-extrabold text-lg mb-4">GH₵ ${p.price.toFixed(2)} <span class="text-xs text-gray-400 font-normal">/ ${p.unit}</span></p>
+                    </div>
+                    <button onclick="addToCart('${p.id}')" ${btnDisabled} class="w-full font-bold py-2.5 px-4 rounded-xl shadow transition ${btnClass}">
+                        ${p.stock === 'out-of-stock' ? 'Out of Stock' : 'Add to Cart'}
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCatalog(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-tab').forEach(tab => {
+                tab.classList.remove('bg-emerald-500', 'text-dark-950', 'font-semibold', 'shadow-md');
+                tab.classList.add('bg-dark-800', 'text-gray-300', 'hover:bg-dark-700', 'border', 'border-dark-700');
+            });
+            const activeTab = document.getElementById(`tab-${cat}`);
+            if (activeTab) {
+                activeTab.classList.remove('bg-dark-800', 'text-gray-300', 'hover:bg-dark-700', 'border', 'border-dark-700');
+                activeTab.classList.add('bg-emerald-500', 'text-dark-950', 'font-semibold', 'shadow-md');
+            }
+            renderCatalog();
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product || product.stock === 'out-of-stock') return;
+            const existing = cart.find(item => item.id === productId);
+            if (existing) { existing.quantity += 1; } else { cart.push({ ...product, quantity: 1 }); }
+            updateCartBadge();
+            renderCartItems();
+            toggleCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) { cart = cart.filter(i => i.id !== productId); }
+            }
+            updateCartBadge();
+            renderCartItems();
+        }
+
+        function updateCartBadge() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-badge').innerText = totalCount;
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+            if (!drawer.classList.contains('hidden')) { renderCartItems(); }
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-container');
+            container.innerHTML = '';
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-gray-400">Your cart is currently empty.</div>`;
+                updateCartTotals();
+                return;
+            }
+            cart.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'pt-4 first:pt-0 flex items-center justify-between';
+                div.innerHTML = `
+                    <div class="pr-3">
+                        <h4 class="font-bold text-white text-sm">${item.name}</h4>
+                        <p class="text-xs text-emerald-400 font-semibold mt-0.5">GH₵ ${item.price.toFixed(2)} x ${item.quantity}</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="updateQuantity('${item.id}', -1)" class="w-7 h-7 bg-dark-700 hover:bg-dark-600 rounded-lg text-white font-bold flex items-center justify-center">-</button>
+                        <span class="text-sm font-bold w-5 text-center">${item.quantity}</span>
+                        <button onclick="updateQuantity('${item.id}', 1)" class="w-7 h-7 bg-dark-700 hover:bg-dark-600 rounded-lg text-white font-bold flex items-center justify-center">+</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            updateCartTotals();
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = parseFloat(document.getElementById('delivery-location').value);
+            const grandTotal = subtotal + deliveryFee;
+            document.getElementById('cart-subtotal').innerText = `GH₵ ${subtotal.toFixed(2)}`;
+            document.getElementById('cart-delivery-fee').innerText = `GH₵ ${deliveryFee.toFixed(2)}`;
+            document.getElementById('cart-grand-total').innerText = `GH₵ ${grandTotal.toFixed(2)}`;
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) { alert('Your cart is empty.'); return; }
+            const name = document.getElementById('customer-name').value.trim();
+            const address = document.getElementById('customer-address').value.trim();
+            if (!name || !address) { alert('Please enter your full name and delivery address.'); return; }
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliverySelect = document.getElementById('delivery-location');
+            const deliveryFee = parseFloat(deliverySelect.value);
+            const deliveryLocationName = deliverySelect.options[deliverySelect.selectedIndex].text;
+            const grandTotal = subtotal + deliveryFee;
+
+            let message = `🛒 *NEW ORDER - SPOTLIGHT ENTERPRISE*\n\n👤 *Customer:* ${name}\n📍 *Address:* ${address}\n🚚 *Zone:* ${deliveryLocationName}\n\n📦 *Items:*\n`;
+            cart.forEach((item, index) => { message += `${index + 1}. ${item.name} (${item.quantity}x) - GH₵ ${(item.price * item.quantity).toFixed(2)}\n`; });
+            message += `\n🔹 *Subtotal:* GH₵ ${subtotal.toFixed(2)}\n🔹 *Delivery:* GH₵ ${deliveryFee.toFixed(2)}\n💰 *Total:* GH₵ ${grandTotal.toFixed(2)}`;
+
+            window.open(`https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function sendInquiryWhatsApp() {
+            const dept = document.getElementById('rx-dept').value;
+            const name = document.getElementById('rx-name').value.trim();
+            const details = document.getElementById('rx-details').value.trim();
+            if (!name || !details) { alert('Please enter your name and order/prescription details.'); return; }
+
+            const message = `📋 *SPOTLIGHT DESK INQUIRY*\n\n🏷️ *Department:* ${dept}\n👤 *Customer:* ${name}\n📝 *Details:* ${details}`;
+            window.open(`https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function toggleAdminModal() { document.getElementById('admin-modal').classList.toggle('hidden'); }
+
+        function verifyAdmin() {
+            const inputPass = document.getElementById('admin-passcode').value;
+            if (inputPass === '@Wisekofi01') {
+                document.getElementById('admin-auth-container').classList.add('hidden');
+                document.getElementById('admin-panel-content').classList.remove('hidden');
+                renderAdminProductList();
+            } else { alert('Incorrect passcode.'); }
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('new-prod-name').value.trim();
+            const category = document.getElementById('new-prod-cat').value;
+            const price = parseFloat(document.getElementById('new-prod-price').value);
+            const stock = document.getElementById('new-prod-stock').value;
+            const unit = document.getElementById('new-prod-unit').value.trim() || 'piece';
+            const image = document.getElementById('new-prod-img').value.trim();
+
+            if (!name || isNaN(price)) { alert('Enter valid product name and price.'); return; }
+            products.push({ id: 'sp_' + Date.now(), name, category, price, stock, unit, image });
+            localStorage.setItem('spotlight_products', JSON.stringify(products));
+            renderCatalog();
+            renderAdminProductList();
+            document.getElementById('new-prod-name').value = '';
+            document.getElementById('new-prod-price').value = '';
+            document.getElementById('new-prod-unit').value = '';
+            document.getElementById('new-prod-img').value = '';
+            alert('Product added successfully!');
+        }
+
+        function renderAdminProductList() {
+            const listContainer = document.getElementById('admin-product-list');
+            listContainer.innerHTML = '';
+            products.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'bg-dark-800 p-3 rounded-lg border border-dark-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-sm';
+                div.innerHTML = `
+                    <div>
+                        <p class="font-bold text-white">${p.name}</p>
+                        <p class="text-xs text-emerald-400">GH₵ ${p.price.toFixed(2)} • ${p.category} (${p.stock})</p>
+                    </div>
+                    <div class="flex items-center gap-2 w-full sm:w-auto">
+                        <input type="text" id="img-input-${p.id}" placeholder="Paste image link" class="bg-dark-900 border border-dark-600 rounded px-2 py-1 text-xs text-white flex-grow sm:w-40">
+                        <button onclick="updateProductImage('${p.id}')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded text-xs transition">Add Img</button>
+                        <button onclick="deleteProduct('${p.id}')" class="bg-rose-500/20 hover:bg-rose-500 text-rose-400 hover:text-white px-2.5 py-1 rounded text-xs transition">Del</button>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+
+        function updateProductImage(productId) {
+            const inputVal = document.getElementById(`img-input-${productId}`).value.trim();
+            if (!inputVal) { alert('Please paste a valid image link first.'); return; }
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                product.image = inputVal;
+                localStorage.setItem('spotlight_products', JSON.stringify(products));
+                renderCatalog();
+                renderAdminProductList();
+                alert('Product image updated!');
+            }
+        }
+
+        function deleteProduct(productId) {
+            if (confirm('Delete this product?')) {
+                products = products.filter(p => p.id !== productId);
+                localStorage.setItem('spotlight_products', JSON.stringify(products));
+                renderCatalog();
+                renderAdminProductList();
+            }
+        }
+    </script>
+</body>
+</html>
