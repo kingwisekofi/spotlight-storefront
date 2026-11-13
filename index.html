@@ -191,7 +191,13 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300 mb-2">Your Location / Delivery Zone</label>
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-300">Your Location / Zone</label>
+                                <button type="button" onclick="getGPSLocation()" class="text-xs text-emerald-400 hover:text-emerald-300 font-medium flex items-center space-x-1 transition">
+                                    <span>📍</span>
+                                    <span id="gps-btn-text">Use GPS Location</span>
+                                </button>
+                            </div>
                             <input type="text" id="rx-location" placeholder="e.g. Ashaiman Lebanon Zone 5" class="w-full bg-dark-800 border border-dark-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition text-sm">
                         </div>
                         <div>
@@ -610,6 +616,36 @@
             message += `⏰ *Availability/Time:* ${availability}\n📝 *Details:* ${details}`;
 
             window.open(`https://wa.me/${STORE_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function getGPSLocation() {
+            const btnText = document.getElementById('gps-btn-text');
+            const locationInput = document.getElementById('rx-location');
+
+            if (!navigator.geolocation) {
+                alert('Geolocation is not supported by your browser.');
+                return;
+            }
+
+            btnText.innerText = 'Detecting GPS...';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const mapsLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                    
+                    locationInput.value = `GPS Pin: ${lat.toFixed(5)}, ${lon.toFixed(5)} (${mapsLink})`;
+                    btnText.innerText = '✓ GPS Captured!';
+                    setTimeout(() => { btnText.innerText = 'Use GPS Location'; }, 4000);
+                },
+                (error) => {
+                    console.error(error);
+                    alert('Unable to retrieve your location. Please check your device permission settings or type it manually.');
+                    btnText.innerText = 'Use GPS Location';
+                },
+                { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+            );
         }
 
         function toggleAdminModal() { document.getElementById('admin-modal').classList.toggle('hidden'); }
